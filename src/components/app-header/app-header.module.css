@@ -1,0 +1,40 @@
+header {
+  background-color: #1c1c21;
+ 
+}
+
+header .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+  width: 80%;
+  height: 88px;
+}
+nav {
+  display: flex;
+width: 400px;
+}
+.profile a,
+nav a {
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  margin: 16px 20px;
+ 
+    font-size: 16px;
+}
+nav a:first-child{
+    color: #fff;
+    
+}
+
+.profile{
+
+  width: 400px;
+}
+
+.profile a{
+  display: flex;
+  justify-content: flex-end;
+}
