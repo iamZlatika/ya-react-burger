@@ -1,0 +1,57 @@
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  text-align: start;
+
+  height: 912px;
+  
+}
+.items{
+  overflow-y: scroll;
+}
+.items::-webkit-scrollbar {
+  width: 5px;
+  background-color: #2f2f37;
+}
+
+.items::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+.tabbar {
+  display: flex;
+}
+
+.products {
+  display: grid;
+  grid-template-columns: 290px 290px;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0;
+}
+li {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  list-style: none;
+}
+
+li div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+li div svg{
+  height: 22px;
+}
+li img {
+  width: 240px;
+  height: 120px;
+}
+
+li h4{
+  text-align: center;
+}

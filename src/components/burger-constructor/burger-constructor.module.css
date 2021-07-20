@@ -1,0 +1,36 @@
+.burgeritems {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow-y: scroll;
+  height: 800px;
+}
+.burgeritems::-webkit-scrollbar {
+  width: 5px;
+  background-color: #2f2f37;
+}
+
+.burgeritems::-webkit-scrollbar-thumb {
+  background-color: #8585ad;
+}
+
+.burgeritem {
+ display: flex;
+
+}
+.burgeritem img {
+  width: 80px;
+  height: 40px;
+}
+
+.price{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.submit{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
