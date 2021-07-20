@@ -19,7 +19,7 @@ const BurgerConstructor = () => {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={data[0].name}
+            text={`${data[0].name} (верх)`}
             price={data[0].price}
             thumbnail={data[0].image}
           />
@@ -33,7 +33,7 @@ const BurgerConstructor = () => {
           return (
             idx !== 0 &&
             el.type !== "bun" && (
-              <div>
+              <div key={el._id}>
                 <DragIcon type="primary" />
                 <ConstructorElement
                   isLocked={false}
@@ -45,6 +45,17 @@ const BurgerConstructor = () => {
             )
           );
         })}
+      </div>
+      <div className="pl-14 mt-4">
+        {
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${data[0].name} (низ)`}
+            price={data[0].price}
+            thumbnail={data[0].image}
+          />
+        }
       </div>
       <div className={`${styles.submit} mt-10`}>
         <div className={`${styles.total} text text_type_digits-medium mr-8`}>
@@ -59,34 +70,12 @@ const BurgerConstructor = () => {
   );
 };
 
-data.propTypes={
+data.propTypes = {
   _id: PropTypes.string,
   name: PropTypes.string,
   type: PropTypes.string,
   price: PropTypes.number,
-  image: PropTypes.string
-}
-
-Button.propTypes = {
-  type: PropTypes.string | undefined,
-  size: PropTypes.string | undefined,
+  image: PropTypes.string,
 };
 
-ConstructorElement.propTypes={
-  type: PropTypes.string | undefined,
-  isLocked: PropTypes.bool | undefined,
-  text: PropTypes.string,
-  thumbnail: PropTypes.string,
-  price: PropTypes.number,
-}
-
-
-
-
-DragIcon.propTypes={
-  type: PropTypes.string
-}
-CurrencyIcon.propTypes={
-  type: PropTypes.string
-}
 export default BurgerConstructor;

@@ -100,22 +100,6 @@ const BurgerIngredients = () => {
   );
 };
 
-Tab.propTypes = {
-  active: PropTypes.bool,
-  value: PropTypes.string,
-  onClick: PropTypes.func,
-};
-
-Counter.propTypes = {
-  count: PropTypes.number,
-  size: PropTypes.string,
-};
-
-CurrencyIcon.propTypes = {
-  type: PropTypes.string,
-};
-
-
 data.propTypes={
   _id: PropTypes.string,
   name: PropTypes.string,
