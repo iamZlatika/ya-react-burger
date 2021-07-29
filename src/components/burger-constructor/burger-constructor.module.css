@@ -15,22 +15,21 @@
 }
 
 .burgeritem {
- display: flex;
-
+  display: flex;
 }
 .burgeritem img {
   width: 80px;
   height: 40px;
 }
 
-.price{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+.price {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-.submit{
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+.submit {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }

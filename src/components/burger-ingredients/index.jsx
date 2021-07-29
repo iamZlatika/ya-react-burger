@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import styles from "./burger-ingredients.module.css";
-import { data } from "../../utils/data.js";
+import PropTypes from "prop-types";
+
 import {
   Counter,
   CurrencyIcon,
   Tab,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({ data, displayIngredientInfo }) => {
   const [current, setCurrent] = useState("one");
 
-  const setIncrement = () => {
-    console.log(42);
-  };
+  console.log(data);
   return (
     <div className={styles.ingredients}>
       <h2 className="mt-10 mb-5 text text text_type_main-medium">
@@ -46,23 +44,29 @@ const BurgerIngredients = () => {
         <div>
           <h3 className="mt-10 mb-6">Булки</h3>
           <ul className={styles.products}>
-            {data.map((el) => {
+            {data.map((ingredient) => {
               return (
-                el.type === "bun" && (
-                  <li key={el._id} className={`${styles.bun} mb-10`}>
+                ingredient.type === "bun" && (
+                  <li
+                    key={ingredient._id}
+                    className={`${styles.bun} mb-10`}
+                    onClick={() => displayIngredientInfo(ingredient)}
+                  >
                     <Counter count={1} size="default" />
                     <img
-                      src={el.image}
+                      src={ingredient.image}
                       alt=""
                       className="ml-6 mr-6 mb-1 mt-6"
                     />
                     <div className="mb-1">
                       <span className="mr-2 text text_type_digits-default">
-                        {el.price}{" "}
+                        {ingredient.price}{" "}
                       </span>
                       <CurrencyIcon type="primary" />
                     </div>
-                    <h4 className="text text_type_main-default">{el.name}</h4>
+                    <h4 className="text text_type_main-default">
+                      {ingredient.name}
+                    </h4>
                   </li>
                 )
               );
@@ -72,23 +76,25 @@ const BurgerIngredients = () => {
         <div>
           <h3>Соусы</h3>
           <ul className={styles.products}>
-            {data.map((el) => {
+            {data.map((ingredient) => {
               return (
-                el.type === "sauce" && (
+                ingredient.type === "sauce" && (
                   <li
-                    key={el._id}
+                    onClick={() => displayIngredientInfo(ingredient)}
+                    key={ingredient._id}
                     className={styles.sause}
-                    onClick={setIncrement}
                   >
                     <Counter count={1} size="default" />
-                    <img src={el.image} alt="img" />
+                    <img src={ingredient.image} alt="img" />
                     <div>
                       <span className="mr-2 text text_type_digits-default">
-                        {el.price}{" "}
+                        {ingredient.price}{" "}
                       </span>
                       <CurrencyIcon type="primary" />
                     </div>
-                    <h4 className="text text_type_main-default">{el.name}</h4>
+                    <h4 className="text text_type_main-default">
+                      {ingredient.name}
+                    </h4>
                   </li>
                 )
               );
@@ -100,11 +106,8 @@ const BurgerIngredients = () => {
   );
 };
 
-data.propTypes={
-  _id: PropTypes.string,
-  name: PropTypes.string,
-  type: PropTypes.string,
-  price: PropTypes.number,
-  image: PropTypes.string
-}
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(PropTypes.object),
+  displayOrderInfo: PropTypes.func,
+};
 export default BurgerIngredients;
