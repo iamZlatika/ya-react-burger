@@ -68,7 +68,7 @@ const BurgerConstructor = ({ data, displayOrderInfo }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   displayOrderInfo: PropTypes.func.isRequired,
 };
 

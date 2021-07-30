@@ -11,7 +11,6 @@ import {
 const BurgerIngredients = ({ data, displayIngredientInfo }) => {
   const [current, setCurrent] = useState("one");
 
-  console.log(data);
   return (
     <div className={styles.ingredients}>
       <h2 className="mt-10 mb-5 text text text_type_main-medium">
@@ -107,7 +106,7 @@ const BurgerIngredients = ({ data, displayIngredientInfo }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
   displayOrderInfo: PropTypes.func,
 };
 export default BurgerIngredients;

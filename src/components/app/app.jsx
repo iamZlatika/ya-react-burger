@@ -13,6 +13,7 @@ function App() {
 
   const [isIngredientOpen, setIngredientOpen] = useState(false);
   const [isOrderOpen, setOrderOpen] = useState(false);
+
   const [currentIngredient, setCurrentIngredient] = useState({});
 
   useEffect(() => {

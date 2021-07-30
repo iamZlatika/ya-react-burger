@@ -28,7 +28,7 @@ const OrderDetails = ({ isOpen, onClose }) => {
 };
 
 OrderDetails.propTypes = {
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 export default OrderDetails;

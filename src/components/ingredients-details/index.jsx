@@ -45,8 +45,8 @@ const IngredientDetails = ({ isOpen, onClose, data }) => {
 };
 
 IngredientDetails.propTypes = {
-  data: PropTypes.object,
-  isOpen: PropTypes.bool,
-  onClose: PropTypes.func,
+  data: PropTypes.object.isRequired,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
 };
 export default IngredientDetails;
