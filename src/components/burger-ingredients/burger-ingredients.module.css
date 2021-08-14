@@ -5,9 +5,8 @@
   text-align: start;
 
   height: 912px;
-  
 }
-.items{
+.items {
   overflow-y: scroll;
 }
 .items::-webkit-scrollbar {
@@ -44,7 +43,7 @@ li div {
   align-items: center;
   justify-content: center;
 }
-li div svg{
+li div svg {
   height: 22px;
 }
 li img {
@@ -52,6 +51,6 @@ li img {
   height: 120px;
 }
 
-li h4{
+li h4 {
   text-align: center;
 }
