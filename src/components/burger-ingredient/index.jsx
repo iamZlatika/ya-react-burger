@@ -4,6 +4,7 @@ import {
   CurrencyIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
+import PropTypes from "prop-types";
 
 const BurgerIngredient = ({ ingredient, displayIngredientInfo, quantity }) => {
   const [, ref] = useDrag({
@@ -28,6 +29,12 @@ const BurgerIngredient = ({ ingredient, displayIngredientInfo, quantity }) => {
       <h4 className="text text_type_main-default">{ingredient.name}</h4>
     </li>
   );
+};
+
+BurgerIngredient.propTypes = {
+  displayIngredientInfo: PropTypes.func.isRequired,
+  quantity: PropTypes.number.isRequired,
+  ingredient: PropTypes.object.isRequired,
 };
 
 export default BurgerIngredient;

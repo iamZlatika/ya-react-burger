@@ -36,8 +36,8 @@ const BurgerConstructor = ({ displayOrderInfo }) => {
   };
 
   const createOrder = () => {
-    dispatch(makeOrder(bun ? [bun, ...ingredients, bun] : ingredients))
-    displayOrderInfo()
+    dispatch(makeOrder(bun ? [bun, ...ingredients, bun] : ingredients));
+    displayOrderInfo();
   };
   return (
     <div
@@ -100,10 +100,7 @@ const BurgerConstructor = ({ displayOrderInfo }) => {
 };
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
-  orderedIngredients: PropTypes.arrayOf(PropTypes.object),
-  displayOrderInfo: PropTypes.func,
-  createOrder: PropTypes.func,
+  displayOrderInfo: PropTypes.func.isRequired,
 };
 
 export default BurgerConstructor;

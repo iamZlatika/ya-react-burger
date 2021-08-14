@@ -3,7 +3,6 @@ import styles from "./burger-ingredients.module.css";
 import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient";
 import { useSelector } from "react-redux";
-
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 const ingredientTypes = [
@@ -11,7 +10,7 @@ const ingredientTypes = [
   { name: "main", title: "Начинки" },
   { name: "sauces", title: "Соусы" },
 ];
-const BurgerIngredients = ({ displayIngredientInfo, id }) => {
+const BurgerIngredients = ({ displayIngredientInfo }) => {
   const ingredients = useSelector((store) => store.ingredients);
   const { ingredients: orderedIngredients, bun } = useSelector(
     (store) => store.order
@@ -93,8 +92,6 @@ const BurgerIngredients = ({ displayIngredientInfo, id }) => {
 };
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(PropTypes.object),
-  displayOrderInfo: PropTypes.func,
-  current: PropTypes.string,
+  displayIngredientInfo: PropTypes.func.isRequired,
 };
 export default BurgerIngredients;

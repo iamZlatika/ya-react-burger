@@ -11,39 +11,37 @@ const orderUrl = "https://norma.nomoreparties.space/api/orders";
 
 
 export const getIngredients = () => dispatch => {
-    const loadData = async () => {
-        const res = await fetch(url);
-        if (!res.ok) {
-            throw new Error(`Ошибка ${res.status}`);
-        }
-        try {
-            dispatch({
-                type: SET_INGREDIENTS,
-                ingredients: (await res.json()).data
-            })
-
-        } catch (err) {
-            console.log("Error happened during fetching!", err);
-        }
-    };
-    loadData();
+  const loadData = async () => {
+    const res = await fetch(url);
+    try {
+      if (res.ok) {
+        dispatch({
+          type: SET_INGREDIENTS,
+          ingredients: (await res.json()).data
+        })
+      }
+    } catch (err) {
+      console.log(`Error status is ${res.status}`, err);
+    }
+  };
+  loadData();
 }
 
-export const makeOrder =(ingredients)=> async dispatch =>{
-    const options = {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ingredients: ingredients.map((el) => el._id),
-        }),
-      };
-      const res = await fetch(orderUrl, options);
-      if (!res.ok) {
-        throw new Error(`Ошибка ${res.status}`);
-      }
-      try {
-        dispatch({type: SET_ORDER_NUMBER, orderNumber:  (await res.json()).order.number});
-      } catch (err) {
-        console.log("Error happened during fetching!", err);
-      }
+export const makeOrder = (ingredients) => async dispatch => {
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      ingredients: ingredients.map((el) => el._id),
+    }),
+  };
+  const res = await fetch(orderUrl, options);
+
+  try {
+    if (res.ok) {
+      dispatch({ type: SET_ORDER_NUMBER, orderNumber: (await res.json()).order.number })
+    };
+  } catch (err) {
+    console.log(`Error status is ${res.status}`, err);
+  }
 }

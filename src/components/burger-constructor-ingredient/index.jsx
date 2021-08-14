@@ -1,7 +1,6 @@
 import { forwardRef, useRef, useImperativeHandle } from "react";
-
+import PropTypes from "prop-types";
 import { DragSource, DropTarget } from "react-dnd";
-
 import {
   DragIcon,
   ConstructorElement,
@@ -33,6 +32,15 @@ const BurgerConstructorIngredient = forwardRef(
     );
   }
 );
+
+BurgerConstructorIngredient.propTypes = {
+  ingredient: PropTypes.object.isRequired,
+  onClose: PropTypes.func.isRequired,
+  isDragging: PropTypes.bool.isRequired,
+  connectDragSource: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
+};
+
 
 export default DropTarget(
   "burger-constructor-ingredient",
