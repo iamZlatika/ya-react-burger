@@ -1,0 +1,30 @@
+.wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+}
+
+h2{
+    margin-bottom: 0;
+}
+.container{
+    display: flex;
+   }
+
+.left_side{
+    width: 320px;
+}
+.profile_items{
+    line-height: 64px;
+    height: 64px;
+    cursor: pointer;
+}
+
+.links{
+    text-decoration: none;
+    color: #4C4CFF;
+    font-size: 16px;
+line-height: 24px;
+}

@@ -1,10 +1,7 @@
 import styles from "./ingredients-details.module.css";
-import { useSelector } from "react-redux";
+import PropTypes from "prop-types";
 
-const IngredientDetails = () => {
-  const ingredient = useSelector(
-    (store) => store.ingredients.currentIngredient
-  );
+const IngredientDetails = ({ ingredient }) => {
   return (
     <>
       <div className={`${styles.title} text text_type_main-large mt-10 ml-10`}>
@@ -42,6 +39,10 @@ const IngredientDetails = () => {
       </div>
     </>
   );
+};
+
+IngredientDetails.propTypes = {
+  ingredient: PropTypes.object.isRequired,
 };
 
 export default IngredientDetails;
