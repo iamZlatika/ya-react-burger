@@ -15,7 +15,8 @@ const LoginPage = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault()
         const result = await login(email, password)
 
         if (result.success) {
@@ -27,18 +28,30 @@ const LoginPage = () => {
     }
 
     return (
-        <div className={styles.wrapper}>
+        <form 
+        className={styles.wrapper}
+        onSubmit={handleLogin}>
             <h2 className='mt-30'>Вход</h2>
 
             <div className='mt-6'>
-                <EmailInput onChange={(e) => setEmail(e.target.value)} name='email' value={email} /></div>
+                <EmailInput 
+                onChange={(e) => setEmail(e.target.value)} 
+                name='email' 
+                value={email} 
+                />
+                </div>
             <div className='mt-6 mb-6'>
-                <PasswordInput onChange={(e) => setPassword(e.target.value)} name='password' value={password} /></div>
-            <Button onClick={handleLogin}>Войти</Button>
+                <PasswordInput 
+                onChange={(e) => setPassword(e.target.value)} 
+                name='password' 
+                value={password} 
+                />
+                </div>
+            <Button>Войти</Button>
 
             <div className='mt-25 text_color_inactive'>Вы - новый пользователь?<Link className={`${styles.links} pl-2`} to="/register">Зарегистрироваться</Link></div>
             <div className='mt-4 text_color_inactive'>Забыли пароль? <Link className={`${styles.links} pl-2`} to="/forgot-password">Восстановить пароль</Link></div>
-        </div>
+        </form>
     )
 }
 

@@ -3,36 +3,41 @@ import { useSelector } from "react-redux"
 const AUTH_URL = 'https://norma.nomoreparties.space/api'
 
 const authRequest = async (endpoint, body, method) => {
-    const options = {
-        method,
-        headers: { "Content-Type": "application/json" },
-    }
-    const accessToken = getAccessToken()
-    if (accessToken) {
-        options.headers.authorization = accessToken
-    }
-
-    if (body) {
-        options.body = JSON.stringify(body)
-    }
-
-    const response = await fetch(`${AUTH_URL}${endpoint}`, options)
-    const result = await response.json()
-
-    if (result.success) {
-        return result;
-    }
-
-    if (result.message === "jwt expired") {
-        const result = await refreshToken()
-        if (result.success) {
-            options.headers.authorization = result.accessToken
-            const response = await fetch(`${AUTH_URL}${endpoint}`, options)
-            return await response.json()
+    try {
+        const options = {
+            method,
+            headers: { "Content-Type": "application/json" },
         }
-        return result;
+        const accessToken = getAccessToken()
+        if (accessToken) {
+            options.headers.authorization = accessToken
+        }
+
+        if (body) {
+            options.body = JSON.stringify(body)
+        }
+
+        const response = await fetch(`${AUTH_URL}${endpoint}`, options)
+        const result = await response.json()
+
+        if (result.success) {
+            return result;
+        }
+
+        if (result.message === "jwt expired") {
+            const result = await refreshToken()
+            if (result.success) {
+                options.headers.authorization = result.accessToken
+                const response = await fetch(`${AUTH_URL}${endpoint}`, options)
+                return await response.json()
+            }
+            return result;
+        }
+        return result
     }
-    return result
+    catch (err) {
+        console.log(err);
+    }
 }
 
 const postRequest = async (endpoint, body, accessToken = '') => {

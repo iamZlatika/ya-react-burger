@@ -12,32 +12,13 @@ import { DndProvider } from "react-dnd";
 import styles from "../components/app/app.module.css";
 
 const MainPage = () => {
-
     const history = useHistory()
-
-    const [isIngredientOpen, setIngredientOpen] = useState(false);
     const [isOrderOpen, setOrderOpen] = useState(false);
-    const [ingredient, setIngredient] = useState({})
-
-
-
     const displayIngredientInfo = (ingredient) => {
-        setIngredientOpen(true);
-        setIngredient(ingredient)
-   
-        window.history.pushState(null, "", `/ingredients/${ingredient._id}`
-        );
-    };
-
-    const hideIngredientsInfo = () => {
-        setIngredientOpen(false);
-        setIngredient({})
-       
-        console.log(history)
-        window.history.pushState(history.state, "", history.location.pathname);
-    };
-    const displayOrderInfo = () => {
-        setOrderOpen(true);
+        history.push(
+            `/ingredients/${ingredient._id}`,
+            { background: history.location }
+        )
     };
 
     return (
@@ -45,15 +26,13 @@ const MainPage = () => {
             <div className={styles.content}>
                 <DndProvider backend={HTML5Backend}>
                     <BurgerIngredients displayIngredientInfo={displayIngredientInfo} />
-                    <BurgerConstructor displayOrderInfo={displayOrderInfo} />
+                    <BurgerConstructor displayOrderInfo={() => setOrderOpen(true)} />
                 </DndProvider>
             </div>
-            <Modal isOpen={isIngredientOpen} onClose={hideIngredientsInfo}>
-                <IngredientDetails ingredient={ingredient} />
-            </Modal>
-            <Modal isOpen={isOrderOpen} onClose={() => setOrderOpen(false)}>
+            {isOrderOpen && 
+            <Modal onClose={() => setOrderOpen(false)}>
                 <OrderDetails />
-            </Modal>
+            </Modal>}
         </>
     )
 }

@@ -46,7 +46,9 @@ const AppHeader = () => {
             Лента заказов
           </MenuItem>
         </nav>
-        <Logo />
+        <Link to='/'>
+          <Logo />
+        </Link>
         <div className={styles.profile}>
           <MenuItem to="/profile" icon="ProfileIcon">
             Личный кабинет

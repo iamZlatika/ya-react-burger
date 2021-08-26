@@ -17,9 +17,10 @@ const BurgerIngredient = ({ ingredient, displayIngredientInfo, quantity }) => {
       className={`${styles.bun} mb-10`}
       onClick={() => displayIngredientInfo(ingredient)}
       ref={ref}
+      style={{cursor: "pointer"}}
     >
       {quantity > 0 && <Counter count={quantity} size="default" />}
-      <img src={ingredient.image} alt="" className="ml-6 mr-6 mb-1 mt-6" />
+      <img src={ingredient.image} alt="" className="ml-6 mr-6 mb-1 mt-6"/>
       <div className="mb-1">
         <span className="mr-2 text text_type_digits-default">
           {ingredient.price}{" "}
