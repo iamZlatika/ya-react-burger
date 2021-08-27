@@ -18,7 +18,6 @@ import {
 import Modal from "../modal";
 import IngredientDetails from "../ingredients-details";
 
-
 function App() {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -28,7 +27,7 @@ function App() {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const background = location?.state?.background;
+  const background = history?.action === "PUSH" && location?.state?.background;
 
   return (
     <>
@@ -60,14 +59,20 @@ function App() {
         </Route>
       </Switch>
 
-        <Route
-          path="/ingredients/:id"
-          children={
-            background && <Modal onClose={()=>{history.goBack()}}>
-              <IngredientDetails/>
+      <Route
+        path="/ingredients/:id"
+        children={
+          background && (
+            <Modal
+              onClose={() => {
+                history.goBack();
+              }}
+            >
+              <IngredientDetails />
             </Modal>
-          }
-        />
+          )
+        }
+      />
     </>
   );
 }
