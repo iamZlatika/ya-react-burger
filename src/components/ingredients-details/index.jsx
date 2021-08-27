@@ -1,10 +1,14 @@
 import styles from "./ingredients-details.module.css";
+import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 const IngredientDetails = () => {
-  const ingredient = useSelector(
-    (store) => store.ingredients.currentIngredient
-  );
+  const {id} = useParams()
+  const ingredient = useSelector(state => state.ingredients?.ingredients?.[id])
+  if (!ingredient) {
+    return <></>
+  }
+
   return (
     <>
       <div className={`${styles.title} text text_type_main-large mt-10 ml-10`}>
@@ -43,5 +47,7 @@ const IngredientDetails = () => {
     </>
   );
 };
+
+
 
 export default IngredientDetails;

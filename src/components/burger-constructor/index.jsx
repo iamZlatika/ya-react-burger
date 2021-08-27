@@ -1,5 +1,5 @@
 import styles from "./burger-constructor.module.css";
-import { makeOrder } from "../../services/actions";
+import { useOrder } from "../../services/orders";
 import {
   CurrencyIcon,
   Button,
@@ -9,6 +9,7 @@ import BurgerConstructorIngredient from "../burger-constructor-ingredient";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
+import { useHistory } from "react-router-dom";
 import {
   ADD_INGREDIENT,
   DELETE_IGREDIENT,
@@ -17,9 +18,10 @@ import {
 
 const BurgerConstructor = ({ displayOrderInfo }) => {
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const { ingredients, bun } = useSelector((store) => store.order);
-
+  const { loggedIn } = useSelector((state) => state.auth);
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(ingredient) {
@@ -35,9 +37,15 @@ const BurgerConstructor = ({ displayOrderInfo }) => {
     dispatch({ type: MOVE_IGREDIENT, source, target });
   };
 
-  const createOrder = () => {
-    dispatch(makeOrder(bun ? [bun, ...ingredients, bun] : ingredients));
-    displayOrderInfo();
+  const { createOrder } = useOrder();
+
+  const handleOrderCreation = () => {
+    if (!loggedIn) {
+      history.push("/login");
+    } else {
+      createOrder();
+      displayOrderInfo();
+    }
   };
   return (
     <div
@@ -91,7 +99,7 @@ const BurgerConstructor = ({ displayOrderInfo }) => {
           )}
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="medium" onClick={createOrder}>
+        <Button type="primary" size="medium" onClick={handleOrderCreation}>
           Оформить заказ
         </Button>
       </div>

@@ -13,6 +13,8 @@ export const orderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 orderNumber: action.orderNumber,
+                ingredients: [],
+                bun: undefined,
             }
         }
         case ADD_INGREDIENT: {
@@ -24,16 +26,16 @@ export const orderReducer = (state = initialState, action) => {
                 }
                 : {
                     ...state,
-                    ingredients: [...state.ingredients, {...action.ingredient, __id: __id++}]
+                    ingredients: [...state.ingredients, { ...action.ingredient, __id: __id++ }]
                 }
         }
-        case DELETE_IGREDIENT:{
+        case DELETE_IGREDIENT: {
             return {
                 ...state,
                 ingredients: state.ingredients.filter((_, idx) => idx !== action.idx)
             }
         }
-        case MOVE_IGREDIENT:{
+        case MOVE_IGREDIENT: {
             const ingredient = state.ingredients[action.source]
             let ingredients = state.ingredients.filter((_, i) => i !== action.source)
             if (action.target === 0) {

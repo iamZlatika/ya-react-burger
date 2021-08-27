@@ -1,62 +1,79 @@
-import { useState, useEffect } from "react";
-import styles from "./app.module.css";
+import { useEffect } from "react";
 import AppHeader from "../app-header";
-import BurgerIngredients from "../burger-ingredients";
-import BurgerConstructor from "../burger-constructor";
-import Modal from "../modal";
-import IngredientDetails from "../ingredients-details";
-import OrderDetails from "../order-details";
-
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions";
-import { SET_CURRENT_IGREDIENT } from "../../services/actions";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { DndProvider } from "react-dnd";
+import ProtectedRoute from "../protected-route";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import {
+  MainPage,
+  RegisterPage,
+  LoginPage,
+  IngredientPage,
+  ResetPassPage,
+  NotFoundPage,
+  ProfilePage,
+  ForgotPassPage,
+} from "../../pages";
+
+import Modal from "../modal";
+import IngredientDetails from "../ingredients-details";
 
 function App() {
   const dispatch = useDispatch();
-
-  const [isIngredientOpen, setIngredientOpen] = useState(false);
-  const [isOrderOpen, setOrderOpen] = useState(false);
+  const location = useLocation();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
- 
-
-  const displayIngredientInfo = (ingredient) => {
-    setIngredientOpen(true);
-    dispatch({ type: SET_CURRENT_IGREDIENT, currentIngredient: ingredient });
-  };
-
-  const hideIngredientsInfo = () => {
-    setIngredientOpen(false);
-    dispatch({ type: SET_CURRENT_IGREDIENT, currentIngredient: {} });
-  };
-  const displayOrderInfo = () => {
-    setOrderOpen(true);
-  };
+  const background = history?.action === "PUSH" && location?.state?.background;
 
   return (
-    <div className={styles.App}>
+    <>
       <AppHeader />
-    
-        <div className={styles.content}>
-          <DndProvider backend={HTML5Backend}>
-            <BurgerIngredients displayIngredientInfo={displayIngredientInfo} />
+      <Switch location={background || location}>
+        <Route path="/" exact>
+          <MainPage />
+        </Route>
+        <Route path="/register" exact>
+          <RegisterPage />
+        </Route>
+        <Route path="/login" exact>
+          <LoginPage />
+        </Route>
+        <Route path="/ingredients/:id" exact>
+          <IngredientPage />
+        </Route>
+        <Route path="/reset-password" exact>
+          <ResetPassPage />
+        </Route>
+        <ProtectedRoute path="/profile" exact>
+          <ProfilePage />
+        </ProtectedRoute>
+        <Route path="/forgot-password" exact>
+          <ForgotPassPage />
+        </Route>
+        <Route>
+          <NotFoundPage />
+        </Route>
+      </Switch>
 
-            <BurgerConstructor displayOrderInfo={displayOrderInfo} />
-          </DndProvider>
-        </div>
-        <Modal isOpen={isIngredientOpen} onClose={hideIngredientsInfo}>
-          <IngredientDetails />
-        </Modal>
-        <Modal isOpen={isOrderOpen} onClose={() => setOrderOpen(false)}>
-          <OrderDetails />
-        </Modal>
- 
-    </div>
+      <Route
+        path="/ingredients/:id"
+        children={
+          background && (
+            <Modal
+              onClose={() => {
+                history.goBack();
+              }}
+            >
+              <IngredientDetails />
+            </Modal>
+          )
+        }
+      />
+    </>
   );
 }
 

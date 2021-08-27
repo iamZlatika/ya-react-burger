@@ -3,7 +3,7 @@ const initialState = {
     buns: [],
     main: [],
     sauces: [],
-    currentIngredient: {}
+    ingredients: {}
 }
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -15,6 +15,7 @@ export const ingredientsReducer = (state = initialState, action) => {
                 buns: action.ingredients.filter(el => el.type === 'bun'),
                 main: action.ingredients.filter(el => el.type === 'main'),
                 sauces: action.ingredients.filter(el => el.type === 'sauce'),
+                ingredients: Object.fromEntries(action.ingredients.map(el => [el._id, el]))
             }
         }
         case SET_CURRENT_IGREDIENT: {

@@ -5,7 +5,7 @@ import ModalOverlay from "../modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from "prop-types";
 
-const Modal = ({ children, isOpen, onClose }) => {
+const Modal = ({ children, onClose }) => {
   useEffect(() => {
     const handleClose = (e) => {
       e.keyCode === 27 && onClose();
@@ -17,7 +17,6 @@ const Modal = ({ children, isOpen, onClose }) => {
   }, [onClose]);
 
   return (
-    isOpen &&
     ReactDOM.createPortal(
       <>
         <ModalOverlay onClose={onClose}>

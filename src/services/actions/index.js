@@ -4,10 +4,13 @@ export const ADD_INGREDIENT = 'ADD_INGREDIENT'
 export const SET_CURRENT_IGREDIENT = 'SET_CURRENT_IGREDIENT'
 export const DELETE_IGREDIENT = 'DELETE_IGREDIENT'
 export const MOVE_IGREDIENT = 'MOVE_IGREDIENT'
+export const LOGIN = 'LOGIN'
+export const LOGOUT = 'LOGOUT'
+
+
 
 const url = `https://norma.nomoreparties.space/api/ingredients`;
 const orderUrl = "https://norma.nomoreparties.space/api/orders";
-
 
 
 export const getIngredients = () => dispatch => {
@@ -27,10 +30,10 @@ export const getIngredients = () => dispatch => {
   loadData();
 }
 
-export const makeOrder = (ingredients) => async dispatch => {
+export const makeOrder = (ingredients, accessToken) => async dispatch => {
   const options = {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", "Authorization": accessToken },
     body: JSON.stringify({
       ingredients: ingredients.map((el) => el._id),
     }),
@@ -45,3 +48,4 @@ export const makeOrder = (ingredients) => async dispatch => {
     console.log(`Error status is ${res.status}`, err);
   }
 }
+
