@@ -5,33 +5,54 @@ import {
   ListIcon,
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Link, useRouteMatch } from "react-router-dom";
+import PropTypes from "prop-types";
 
+const ICONS = {
+  BurgerIcon: BurgerIcon,
+  ListIcon: ListIcon,
+  ProfileIcon: ProfileIcon,
+};
+
+const MenuItem = ({ children, icon, to }) => {
+  const match = useRouteMatch(to);
+  const isActive = match ? match.isExact : false;
+  const Icon = ICONS[icon];
+  const textColor = isActive ? "" : "text_color_inactive";
+  return (
+    <Link to={to}>
+      <Icon type={isActive ? "primary" : "secondary"} />
+      <span className={`${textColor} text text_type_main-default pl-2`}>
+        {children}
+      </span>
+    </Link>
+  );
+};
+
+MenuItem.propTypes = {
+  children: PropTypes.node.isRequired,
+  icon: PropTypes.string.isRequired,
+  to: PropTypes.string.isRequired,
+};
 const AppHeader = () => {
   return (
     <header>
       <div className={styles.container}>
         <nav>
-          <a href="#">
-            <BurgerIcon type="primary" />
-            <span className="pl-2">Конструктор</span>
-          </a>
-          <a href="#">
-            <ListIcon type="secondary" />
-            <span className="text text_type_main-default text_color_inactive pl-2">
-              Лента заказов
-            </span>
-          </a>
+          <MenuItem to="/" icon="BurgerIcon">
+            Конструктор
+          </MenuItem>
+          <MenuItem to="/orders" icon="ListIcon">
+            Лента заказов
+          </MenuItem>
         </nav>
-
-        <Logo />
-
+        <Link to='/'>
+          <Logo />
+        </Link>
         <div className={styles.profile}>
-          <a href="#">
-            <ProfileIcon type="secondary" />
-            <span className="text text_type_main-default text_color_inactive pl-2">
-              Личный кабинет
-            </span>
-          </a>
+          <MenuItem to="/profile" icon="ProfileIcon">
+            Личный кабинет
+          </MenuItem>
         </div>
       </div>
     </header>

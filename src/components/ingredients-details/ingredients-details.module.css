@@ -1,0 +1,16 @@
+.ingredient {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.img {
+  height: 240px;
+  width: 480px;
+}
+
+.details {
+  display: flex;
+  padding: 0;
+}
