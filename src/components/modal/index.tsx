@@ -1,13 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, ReactNode } from "react";
 import ReactDOM from "react-dom";
 import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from "prop-types";
 
-const Modal = ({ children, onClose }) => {
+interface IModal {
+  children: ReactNode,
+  onClose: () => void,
+}
+
+const Modal: React.FC<IModal> = ({ children, onClose }) => {
   useEffect(() => {
-    const handleClose = (e) => {
+    const handleClose = (e: KeyboardEvent) => {
       e.keyCode === 27 && onClose();
     };
     window.addEventListener("keydown", handleClose);
@@ -28,14 +32,9 @@ const Modal = ({ children, onClose }) => {
           </div>
         </ModalOverlay>
       </>,
-      document.getElementById("modal-root")
+      document.getElementById("modal-root")!
     )
   );
 };
 
-Modal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired,
-};
 export default Modal;

@@ -1,0 +1,14 @@
+.feed_wrapper{
+    display: flex;
+}
+.items {
+    overflow-y: scroll;
+  }
+  .items::-webkit-scrollbar {
+    width: 5px;
+    background-color: #2f2f37;
+  }
+  
+  .items::-webkit-scrollbar-thumb {
+    background-color: #8585ad;
+  }

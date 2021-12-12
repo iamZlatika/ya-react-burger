@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import AppHeader from "../app-header";
 import { useDispatch } from "react-redux";
 import { getIngredients } from "../../services/actions";
@@ -13,18 +13,29 @@ import {
   NotFoundPage,
   ProfilePage,
   ForgotPassPage,
+  FeedPage,
 } from "../../pages";
-
+import { LOGIN } from "../../services/actions";
+import { isLoggedIn } from "../../services/auth";
+import { Location } from "history"
 import Modal from "../modal";
 import IngredientDetails from "../ingredients-details";
 
-function App() {
+
+
+const App: React.FC = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
+  const location = useLocation<{ background?: Location }>();
   const history = useHistory();
 
   useEffect(() => {
     dispatch(getIngredients());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      dispatch({ type: LOGIN })
+    }
   }, [dispatch]);
 
   const background = history?.action === "PUSH" && location?.state?.background;
@@ -35,6 +46,9 @@ function App() {
       <Switch location={background || location}>
         <Route path="/" exact>
           <MainPage />
+        </Route>
+        <Route path="/feed" exact>
+          <FeedPage />
         </Route>
         <Route path="/register" exact>
           <RegisterPage />

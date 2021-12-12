@@ -1,10 +1,12 @@
 import styles from "./ingredients-details.module.css";
 import { useParams } from "react-router";
 import { useSelector } from "react-redux";
+import React from "react";
+import { IIngredient } from "../../services/types";
 
-const IngredientDetails = () => {
-  const {id} = useParams()
-  const ingredient = useSelector(state => state.ingredients?.ingredients?.[id])
+const IngredientDetails: React.FC = () => {
+  const { id } = useParams() as Record<string, string>
+  const ingredient = useSelector<any, IIngredient | undefined>(state => state.ingredients?.ingredients?.[id])
   if (!ingredient) {
     return <></>
   }

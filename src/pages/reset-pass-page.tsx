@@ -2,18 +2,18 @@ import React, { useState } from 'react'
 import { updatePassword } from '../services/auth'
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
 import {
-    Link, useHistory, useLocation, Redirect
+    Link, useHistory, Redirect
 } from "react-router-dom";
 import styles from "./shared.module.css";
 
-const ResetPassPage = () => {
+const ResetPassPage : React.FC = () => {
 
-    const [password, setPassword] = useState('')
-    const [token, setCode] = useState('')
-    const history = useHistory()
+    const [password, setPassword] = useState<string>('')
+    const [token, setCode] = useState<string>('')
+    const history = useHistory<any>()
 
 
-    const hanndlePasswordUpdate = async (e) => {
+    const hanndlePasswordUpdate = async (e: React.FormEvent) => {
         e.preventDefault()
         const result = await updatePassword(password, token)
         if (result.success) {

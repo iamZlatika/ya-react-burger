@@ -1,8 +1,9 @@
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, RouteProps } from "react-router-dom";
 import { getRefreshToken } from "../services/auth";
-import PropTypes from "prop-types";
+import React from "react";
 
-const ProtectedRoute = ({ children, ...rest }) => {
+
+const ProtectedRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
   const loggedIn = !!getRefreshToken();
   return (
     <Route
@@ -23,7 +24,4 @@ const ProtectedRoute = ({ children, ...rest }) => {
   );
 };
 
-ProtectedRoute.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 export default ProtectedRoute;

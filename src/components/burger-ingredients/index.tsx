@@ -1,52 +1,61 @@
-import { useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import styles from "./burger-ingredients.module.css";
-import PropTypes from "prop-types";
 import BurgerIngredient from "../burger-ingredient";
 import { useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
+import { IIngredient } from '../../services/types'
 
-const ingredientTypes = [
+interface ITab {
+  name: string
+  title: string
+}
+
+const ingredientTypes: ITab[] = [
   { name: "buns", title: "Булки" },
   { name: "main", title: "Начинки" },
   { name: "sauces", title: "Соусы" },
 ];
-const BurgerIngredients = ({ displayIngredientInfo }) => {
-  const ingredients = useSelector((store) => store.ingredients);
-  const { ingredients: orderedIngredients, bun } = useSelector(
-    (store) => store.order
+
+interface IBurgerIngredients {
+  displayIngredientInfo: (ingredient: IIngredient) => void
+}
+const BurgerIngredients: React.FC<IBurgerIngredients> = ({ displayIngredientInfo }) => {
+  const ingredients = useSelector<any, Record<string, IIngredient[]>>(store => store.ingredients);
+  const { ingredients: orderedIngredients, bun } = useSelector<any, {ingredients: IIngredient[], bun: IIngredient}>(
+    store => store.order
   );
 
-  const [current, setCurrent] = useState("buns");
+  const [currentTab, setCurrentTab] = useState<string>("buns");
 
-  const ingredientTypeRefs = {
-    buns: useRef(),
-    main: useRef(),
-    sauces: useRef(),
+  const ingredientTypeRefs: Record<string, React.RefObject<HTMLDivElement>> = {
+    buns: useRef<HTMLDivElement>(null),
+    main: useRef<HTMLDivElement>(null),
+    sauces: useRef<HTMLDivElement>(null),
   };
-  const containerRef = useRef();
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  const switchTab = (tab) => {
-    setCurrent(tab);
-    ingredientTypeRefs[tab].current.scrollIntoView({ behavior: "smooth" });
+  const switchTab = (tab: string) => {
+    setCurrentTab(tab);
+    ingredientTypeRefs[tab]?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const updateActiveTab = () => {
-    const containerTop = containerRef.current.getBoundingClientRect().top;
+    const containerTop = containerRef?.current?.getBoundingClientRect().top || 0;
     const activeTab = Object.entries(ingredientTypeRefs)
-      .map(([name, ref]) => [
+      .map(([name, ref]): [string, number] => [
         name,
-        Math.abs(containerTop - ref.current.getBoundingClientRect().top),
+        ref?.current ? Math.abs(containerTop - ref.current.getBoundingClientRect().top) : 0,
       ])
       .sort((a, b) => a[1] - b[1])[0][0];
 
-    setCurrent(activeTab);
+    setCurrentTab(activeTab);
   };
 
-  const countIngredients = (id) => {
+  const countIngredients = (id: number) => {
     if (bun && bun._id === id) {
       return 2;
     }
-    return orderedIngredients.filter((el) => el._id === id).length;
+    return orderedIngredients.filter(({ _id }) => _id === id).length;
   };
 
   return (
@@ -59,7 +68,7 @@ const BurgerIngredients = ({ displayIngredientInfo }) => {
           <Tab
             key={el.name}
             value={el.name}
-            active={current === el.name}
+            active={currentTab === el.name}
             onClick={() => switchTab(el.name)}
           >
             {el.title}
@@ -91,7 +100,5 @@ const BurgerIngredients = ({ displayIngredientInfo }) => {
   );
 };
 
-BurgerIngredients.propTypes = {
-  displayIngredientInfo: PropTypes.func.isRequired,
-};
+
 export default BurgerIngredients;

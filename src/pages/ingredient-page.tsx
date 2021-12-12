@@ -1,8 +1,7 @@
-import React from 'react'
 import IngredientDetails from '../components/ingredients-details'
 
 
-const IngredientPage = () => {
+const IngredientPage : React.FC= () => {
     return (
         <>
             <IngredientDetails />
