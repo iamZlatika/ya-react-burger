@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { IIngredient } from "../types";
 export const SET_INGREDIENTS = "SET_INGREDIENTS";
 export const SET_ORDER_NUMBER = "SET_ORDER_NUMBER";
 export const ADD_INGREDIENT = "ADD_INGREDIENT";
@@ -27,18 +28,16 @@ export const getIngredients = () => (dispatch: Dispatch) => {
   };
   loadData();
 };
-type TIngredients = {
-  _id: number;
-};
 
-export const makeOrder = (ingredients: [], accessToken: string) => async (
+
+export const makeOrder = (ingredients: IIngredient[], accessToken: string) => async (
   dispatch: Dispatch
 ): Promise<void> => {
   const options = {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: accessToken },
     body: JSON.stringify({
-      ingredients: ingredients.map((el: TIngredients) => el._id),
+      ingredients: ingredients.map(el => el._id),
     }),
   };
   const res = await fetch(orderUrl, options);

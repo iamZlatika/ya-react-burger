@@ -4,31 +4,26 @@ import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConnectDragSource, ConnectDropTarget } from "react-dnd"
+import { IIngredient } from "../../services/types";
 
-export interface Ingredient {
-  name: string,
-  price: number,
-  image: any,
-  __id: number,
-}
-
-export interface IBCIngredient {
-  ingredient: Ingredient,
+export interface IBurgerConstructorIngredient {
+  ingredient: IIngredient,
   onClose: () => void,
   isDragging: boolean,
-  connectDragSource: (arg0: any) => void,
-  connectDropTarget: (arg0: any) => void,
-  onMove: (arg0: any, arg1: any) => void,
+  connectDragSource: ConnectDragSource,
+  connectDropTarget: ConnectDropTarget,
+  onMove: (sourse: number, target: number) => void,
   index: number,
 }
 
 type TProps = {
   index: number,
-  onMove: (arg0: any, arg1: any) => void,
+  onMove: (dragIndex: number, hoverIndex: number) => void,
   id: number
 }
 
-const BurgerConstructorIngredient: React.FC<IBCIngredient> = forwardRef(
+const BurgerConstructorIngredient: React.FC<IBurgerConstructorIngredient> = forwardRef<{getNode: () => HTMLInputElement | null}, IBurgerConstructorIngredient>(
   function BurgerConstructorIngredient(
     { ingredient, onClose, isDragging, connectDragSource, connectDropTarget },
     ref

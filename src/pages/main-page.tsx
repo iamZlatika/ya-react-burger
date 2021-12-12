@@ -7,12 +7,13 @@ import OrderDetails from "../components/order-details";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import styles from "../components/app/app.module.css";
+import { IIngredient } from '../services/types';
 
 
 const MainPage: React.FC = () => {
     const history = useHistory()
     const [isOrderOpen, setOrderOpen] = useState<boolean>(false);
-    const displayIngredientInfo = (ingredient: { _id: number }) => {
+    const displayIngredientInfo = (ingredient: IIngredient) => {
         history.push(
             `/ingredients/${ingredient._id}`,
             { background: history.location }

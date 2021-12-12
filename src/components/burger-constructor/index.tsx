@@ -5,7 +5,7 @@ import {
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerConstructorIngredient, {Ingredient} from "../burger-constructor-ingredient";
+import BurgerConstructorIngredient from "../burger-constructor-ingredient";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
@@ -14,6 +14,7 @@ import {
   DELETE_IGREDIENT,
   MOVE_IGREDIENT,
 } from "../../services/actions";
+import { IIngredient } from "../../services/types"
 
 interface IBurgerConstructor {
   displayOrderInfo: () => void
@@ -24,7 +25,7 @@ const BurgerConstructor: React.FC<IBurgerConstructor> = ({ displayOrderInfo }) =
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { ingredients, bun } = useSelector((store: any) => store.order);
+  const { ingredients, bun } = useSelector<unknown, { ingredients: IIngredient[], bun: IIngredient }>((store: any) => store.order);
   const { loggedIn } = useSelector((state: any) => state.auth);
   const [, dropTarget] = useDrop({
     accept: "ingredient",
@@ -37,7 +38,7 @@ const BurgerConstructor: React.FC<IBurgerConstructor> = ({ displayOrderInfo }) =
     dispatch({ type: DELETE_IGREDIENT, idx });
   };
 
-  const moveIngredient = (source: string, target : string) => {
+  const moveIngredient = (source: number, target: number) => {
     dispatch({ type: MOVE_IGREDIENT, source, target });
   };
 
@@ -51,6 +52,12 @@ const BurgerConstructor: React.FC<IBurgerConstructor> = ({ displayOrderInfo }) =
       displayOrderInfo();
     }
   };
+
+  const calcTotal = () => ingredients.reduce(
+    (sum: number, { price }) => sum + price,
+    bun ? bun.price * 2 : 0
+  )
+
   return (
     <div
       className="ml-10 mt-25 "
@@ -72,10 +79,10 @@ const BurgerConstructor: React.FC<IBurgerConstructor> = ({ displayOrderInfo }) =
         className={`${styles.burgeritems} ml-4`}
         style={{ display: "flex", flexDirection: "column", gap: "10px" }}
       >
-        {ingredients.map((el: Ingredient, index: number) => {
+        {ingredients.map((el, index) => {
           return (
             <BurgerConstructorIngredient
-              key={`${el.__id}`}
+              key={`${el._id}`}
               ingredient={ingredients[index]}
               onClose={() => deleteIngredient(index)}
               onMove={moveIngredient}
@@ -97,10 +104,7 @@ const BurgerConstructor: React.FC<IBurgerConstructor> = ({ displayOrderInfo }) =
       )}
       <div className={`${styles.submit} mt-10`}>
         <div className={`${styles.total} text text_type_digits-medium mr-8`}>
-          {ingredients.reduce(
-            (sum: number, ingredient: {price: number}) => sum + ingredient.price,
-            bun ? bun.price * 2 : 0
-          )}
+          {calcTotal()}
           <CurrencyIcon type="primary" />
         </div>
         <Button type="primary" size="medium" onClick={handleOrderCreation}>

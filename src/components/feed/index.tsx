@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./feed.module.css";
 
-const Feed = () => {
+const Feed : React.FC= () => {
   return (
     <>
     <h2>Лента заказов</h2>

@@ -3,48 +3,48 @@ import styles from "./burger-ingredients.module.css";
 import BurgerIngredient from "../burger-ingredient";
 import { useSelector } from "react-redux";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IIngredient } from "../../services/reducers/ingredients";
+import { IIngredient } from '../../services/types'
 
-interface Tab {
+interface ITab {
   name: string
   title: string
 }
 
-const ingredientTypes: Tab[]= [
+const ingredientTypes: ITab[] = [
   { name: "buns", title: "Булки" },
   { name: "main", title: "Начинки" },
   { name: "sauces", title: "Соусы" },
 ];
 
 interface IBurgerIngredients {
-  displayIngredientInfo: (ingredient: {_id: number}) => void
+  displayIngredientInfo: (ingredient: IIngredient) => void
 }
 const BurgerIngredients: React.FC<IBurgerIngredients> = ({ displayIngredientInfo }) => {
-  const ingredients = useSelector((store: any) => store.ingredients);
-  const { ingredients: orderedIngredients, bun } = useSelector(
-    (store: any) => store.order
+  const ingredients = useSelector<any, Record<string, IIngredient[]>>(store => store.ingredients);
+  const { ingredients: orderedIngredients, bun } = useSelector<any, {ingredients: IIngredient[], bun: IIngredient}>(
+    store => store.order
   );
 
   const [currentTab, setCurrentTab] = useState<string>("buns");
 
-  const ingredientTypeRefs: Record<string, React.MutableRefObject<any>> = {
-    buns: useRef(),
-    main: useRef(),
-    sauces: useRef(),
+  const ingredientTypeRefs: Record<string, React.RefObject<HTMLDivElement>> = {
+    buns: useRef<HTMLDivElement>(null),
+    main: useRef<HTMLDivElement>(null),
+    sauces: useRef<HTMLDivElement>(null),
   };
   const containerRef = useRef<HTMLDivElement>(null);
 
   const switchTab = (tab: string) => {
     setCurrentTab(tab);
-    ingredientTypeRefs[tab].current.scrollIntoView({ behavior: "smooth" });
+    ingredientTypeRefs[tab]?.current?.scrollIntoView({ behavior: "smooth" });
   };
 
   const updateActiveTab = () => {
-    const containerTop = containerRef!!.current!!.getBoundingClientRect().top;
+    const containerTop = containerRef?.current?.getBoundingClientRect().top || 0;
     const activeTab = Object.entries(ingredientTypeRefs)
       .map(([name, ref]): [string, number] => [
         name,
-        Math.abs(containerTop - ref.current.getBoundingClientRect().top),
+        ref?.current ? Math.abs(containerTop - ref.current.getBoundingClientRect().top) : 0,
       ])
       .sort((a, b) => a[1] - b[1])[0][0];
 
@@ -55,7 +55,7 @@ const BurgerIngredients: React.FC<IBurgerIngredients> = ({ displayIngredientInfo
     if (bun && bun._id === id) {
       return 2;
     }
-    return orderedIngredients.filter(({_id}: {_id: number}) => _id === id).length;
+    return orderedIngredients.filter(({ _id }) => _id === id).length;
   };
 
   return (
@@ -85,7 +85,7 @@ const BurgerIngredients: React.FC<IBurgerIngredients> = ({ displayIngredientInfo
           <div key={el.name} ref={ingredientTypeRefs[el.name]}>
             <h3 className="pt-10 mb-6">{el.title}</h3>
             <ul className={styles.products}>
-              {ingredients[el.name].map((ingredient: IIngredient) => (
+              {ingredients[el.name].map((ingredient) => (
                 <BurgerIngredient
                   {...{ ingredient, displayIngredientInfo }}
                   key={ingredient._id}

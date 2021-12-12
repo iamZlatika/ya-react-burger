@@ -1,13 +1,9 @@
-import { Redirect, Route } from "react-router-dom";
+import { Redirect, Route, RouteProps } from "react-router-dom";
 import { getRefreshToken } from "../services/auth";
-import React, { ReactNode } from "react";
+import React from "react";
 
 
-interface IProtectedRoute {
-  children: ReactNode,
-
-}
-const ProtectedRoute: React.FC<IProtectedRoute> = ({ children, ...rest }) => {
+const ProtectedRoute: React.FC<RouteProps> = ({ children, ...rest }) => {
   const loggedIn = !!getRefreshToken();
   return (
     <Route

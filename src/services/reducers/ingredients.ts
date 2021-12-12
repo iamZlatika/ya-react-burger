@@ -1,10 +1,11 @@
 import { SET_INGREDIENTS, SET_CURRENT_IGREDIENT } from "../actions";
+import { IIngredient } from "../types";
 
 export interface IIngredients {
   buns: string[];
   main: string[];
   sauces: string[];
-  ingredients: { type?: string; _id?: number };
+  ingredients: Record<string, IIngredient>;
 }
 
 const initialState: IIngredients = {
@@ -13,14 +14,6 @@ const initialState: IIngredients = {
   sauces: [],
   ingredients: {},
 };
-
-export interface IIngredient {
-  _id: number
-  type?: string
-  name: string
-  price: number
-  image: any
-}
 
 export const ingredientsReducer = (state = initialState, action: any) => {
   switch (action.type) {

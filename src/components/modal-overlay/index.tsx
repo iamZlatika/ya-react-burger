@@ -1,5 +1,4 @@
 import styles from "./modal-overlay.module.css";
-import PropTypes from "prop-types";
 import { ReactNode } from "react";
 
 interface IModal {
@@ -31,8 +30,4 @@ const ModalOverlay: React.FC<IModal> = ({ children, onClose }) => {
   );
 };
 
-ModalOverlay.propTypes = {
-  children: PropTypes.node.isRequired,
-  onClose: PropTypes.func.isRequired,
-};
 export default ModalOverlay;
