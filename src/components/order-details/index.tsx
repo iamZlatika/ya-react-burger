@@ -3,7 +3,7 @@ import done from "../../images/done.svg";
 import { useSelector } from "react-redux";
 
 const OrderDetails = () => {
-  const order = useSelector((store) => store.order);
+  const order = useSelector((store: any) => store.order);
   return (
     <div className={styles.details}>
       <h2 className={`${styles.title}, text text_type_digits-large mt-30 mb-8`}>

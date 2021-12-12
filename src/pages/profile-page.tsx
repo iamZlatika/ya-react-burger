@@ -9,13 +9,13 @@ import {
 } from "react-router-dom";
 import styles from "./shared.module.css";
 
-const ProfilePage = () => {
+const ProfilePage : React.FC = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [password, setPassword] = useState('')
-    const [name, setName] = useState('')
-    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState<string>('')
+    const [name, setName] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
 
 
     const { getUserData, setUserData } = useUserData()
@@ -27,7 +27,7 @@ const ProfilePage = () => {
     }, [getUserData]
     )
 
-    const updateName = async (name) => {
+    const updateName = async (name: string) => {
         setName(name)
         setUserData({ name })
     }

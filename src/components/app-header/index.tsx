@@ -6,15 +6,19 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useRouteMatch } from "react-router-dom";
-import PropTypes from "prop-types";
-
-const ICONS = {
+import React, { ReactNode } from "react";
+const ICONS: Record<string, any> = {
   BurgerIcon: BurgerIcon,
   ListIcon: ListIcon,
   ProfileIcon: ProfileIcon,
-};
+} as const;
 
-const MenuItem = ({ children, icon, to }) => {
+interface IMenuItem {
+  children: ReactNode,
+  icon: string,
+  to: string,
+}
+const MenuItem: React.FC<IMenuItem> = ({ children, icon, to }) => {
   const match = useRouteMatch(to);
   const isActive = match ? match.isExact : false;
   const Icon = ICONS[icon];
@@ -29,11 +33,6 @@ const MenuItem = ({ children, icon, to }) => {
   );
 };
 
-MenuItem.propTypes = {
-  children: PropTypes.node.isRequired,
-  icon: PropTypes.string.isRequired,
-  to: PropTypes.string.isRequired,
-};
 const AppHeader = () => {
   return (
     <header>
@@ -42,7 +41,7 @@ const AppHeader = () => {
           <MenuItem to="/" icon="BurgerIcon">
             Конструктор
           </MenuItem>
-          <MenuItem to="/orders" icon="ListIcon">
+          <MenuItem to="/feed" icon="ListIcon">
             Лента заказов
           </MenuItem>
         </nav>

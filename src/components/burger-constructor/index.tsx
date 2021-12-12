@@ -5,8 +5,7 @@ import {
   Button,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import BurgerConstructorIngredient from "../burger-constructor-ingredient";
-import PropTypes from "prop-types";
+import BurgerConstructorIngredient, {Ingredient} from "../burger-constructor-ingredient";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
@@ -16,12 +15,17 @@ import {
   MOVE_IGREDIENT,
 } from "../../services/actions";
 
-const BurgerConstructor = ({ displayOrderInfo }) => {
+interface IBurgerConstructor {
+  displayOrderInfo: () => void
+}
+
+
+const BurgerConstructor: React.FC<IBurgerConstructor> = ({ displayOrderInfo }) => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { ingredients, bun } = useSelector((store) => store.order);
-  const { loggedIn } = useSelector((state) => state.auth);
+  const { ingredients, bun } = useSelector((store: any) => store.order);
+  const { loggedIn } = useSelector((state: any) => state.auth);
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(ingredient) {
@@ -29,11 +33,11 @@ const BurgerConstructor = ({ displayOrderInfo }) => {
     },
   });
 
-  const deleteIngredient = (idx) => {
+  const deleteIngredient = (idx: number) => {
     dispatch({ type: DELETE_IGREDIENT, idx });
   };
 
-  const moveIngredient = (source, target) => {
+  const moveIngredient = (source: string, target : string) => {
     dispatch({ type: MOVE_IGREDIENT, source, target });
   };
 
@@ -68,11 +72,11 @@ const BurgerConstructor = ({ displayOrderInfo }) => {
         className={`${styles.burgeritems} ml-4`}
         style={{ display: "flex", flexDirection: "column", gap: "10px" }}
       >
-        {ingredients.map((el, index) => {
+        {ingredients.map((el: Ingredient, index: number) => {
           return (
             <BurgerConstructorIngredient
               key={`${el.__id}`}
-              ingredient={el}
+              ingredient={ingredients[index]}
               onClose={() => deleteIngredient(index)}
               onMove={moveIngredient}
               index={index}
@@ -94,7 +98,7 @@ const BurgerConstructor = ({ displayOrderInfo }) => {
       <div className={`${styles.submit} mt-10`}>
         <div className={`${styles.total} text text_type_digits-medium mr-8`}>
           {ingredients.reduce(
-            (sum, { price }) => sum + price,
+            (sum: number, ingredient: {price: number}) => sum + ingredient.price,
             bun ? bun.price * 2 : 0
           )}
           <CurrencyIcon type="primary" />
@@ -107,8 +111,6 @@ const BurgerConstructor = ({ displayOrderInfo }) => {
   );
 };
 
-BurgerConstructor.propTypes = {
-  displayOrderInfo: PropTypes.func.isRequired,
-};
+
 
 export default BurgerConstructor;

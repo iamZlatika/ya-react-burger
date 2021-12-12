@@ -1,6 +1,6 @@
 import styles from "./shared.module.css";
 
-const NotFoundPage = () => {
+const NotFoundPage : React.FC= () => {
     return (
         <div className={styles.wrapper}>
             <h2 className='mt-30'>Упс!</h2>

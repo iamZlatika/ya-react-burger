@@ -6,16 +6,16 @@ import {
 } from "react-router-dom";
 import styles from "./shared.module.css";
 
-const RegisterPage = () => {
-    const [password, setPassword] = useState('')
-    const [email, setEmail] = useState('')
-    const [name, setName] = useState('')
+const RegisterPage : React.FC = () => {
+    const [password, setPassword] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [name, setName] = useState<string>('')
 
 
     const history = useHistory()
 
 
-    const handleUserRegistration = async (e) => {
+    const handleUserRegistration = async (e: React.FormEvent) => {
         e.preventDefault()
 
         const result = await registerUser(email, name, password)
