@@ -3,8 +3,8 @@ import { useParams } from "react-router";
 import { useSelector } from "react-redux";
 
 const IngredientDetails = () => {
-  const {id} = useParams()
-  const ingredient = useSelector(state => state.ingredients?.ingredients?.[id])
+  const {id} = useParams() as any
+  const ingredient = useSelector((state: any) => state.ingredients?.ingredients?.[id])
   if (!ingredient) {
     return <></>
   }

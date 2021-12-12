@@ -1,17 +1,39 @@
-import { forwardRef, useRef, useImperativeHandle } from "react";
-import PropTypes from "prop-types";
+import React, { forwardRef, useRef, useImperativeHandle } from "react";
 import { DragSource, DropTarget } from "react-dnd";
 import {
   DragIcon,
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 
-const BurgerConstructorIngredient = forwardRef(
+export interface Ingredient {
+  name: string,
+  price: number,
+  image: any,
+  __id: number,
+}
+
+export interface IBCIngredient {
+  ingredient: Ingredient,
+  onClose: () => void,
+  isDragging: boolean,
+  connectDragSource: (arg0: any) => void,
+  connectDropTarget: (arg0: any) => void,
+  onMove: (arg0: any, arg1: any) => void,
+  index: number,
+}
+
+type TProps = {
+  index: number,
+  onMove: (arg0: any, arg1: any) => void,
+  id: number
+}
+
+const BurgerConstructorIngredient: React.FC<IBCIngredient> = forwardRef(
   function BurgerConstructorIngredient(
     { ingredient, onClose, isDragging, connectDragSource, connectDropTarget },
     ref
   ) {
-    const elementRef = useRef(null);
+    const elementRef = useRef<HTMLInputElement>(null);
     connectDragSource(elementRef);
     connectDropTarget(elementRef);
     useImperativeHandle(ref, () => ({
@@ -33,19 +55,12 @@ const BurgerConstructorIngredient = forwardRef(
   }
 );
 
-BurgerConstructorIngredient.propTypes = {
-  ingredient: PropTypes.object.isRequired,
-  onClose: PropTypes.func.isRequired,
-  isDragging: PropTypes.bool.isRequired,
-  connectDragSource: PropTypes.func.isRequired,
-  connectDropTarget: PropTypes.func.isRequired,
-};
 
 
 export default DropTarget(
   "burger-constructor-ingredient",
   {
-    hover(props, monitor, component) {
+    hover(props: TProps, monitor, component) {
       if (!component) {
         return null;
       }
@@ -67,7 +82,7 @@ export default DropTarget(
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
       const clientOffset = monitor.getClientOffset();
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+      const hoverClientY = clientOffset!!.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return;
@@ -88,7 +103,7 @@ export default DropTarget(
   DragSource(
     "burger-constructor-ingredient",
     {
-      beginDrag: (props) => ({
+      beginDrag: (props: TProps) => ({
         id: props.id,
         index: props.index,
       }),

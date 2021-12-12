@@ -1,14 +1,20 @@
 import styles from "./modal-overlay.module.css";
 import PropTypes from "prop-types";
+import { ReactNode } from "react";
 
-const ModalOverlay = ({ children, onClose }) => {
-  const handleKeyDown = (e) => {
+interface IModal {
+  children: ReactNode,
+  onClose: (e?: React.KeyboardEvent | React.MouseEvent<HTMLElement>) => void,
+}
+
+const ModalOverlay: React.FC<IModal> = ({ children, onClose }) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.keyCode === 27) {
       onClose();
     }
   };
 
-  const onOverlayClose = (e) => {
+  const onOverlayClose = (e: React.MouseEvent<HTMLElement>) => {
     if (e.target === e.currentTarget) {
       onClose(e);
     }

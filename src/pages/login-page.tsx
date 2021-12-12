@@ -8,14 +8,14 @@ import {
 } from "react-router-dom";
 import styles from "./shared.module.css";
 
-const LoginPage = () => {
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+const LoginPage : React.FC= () => {
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
 
     const dispatch = useDispatch()
-    const history = useHistory()
+    const history = useHistory<any>()
 
-    const handleLogin = async (e) => {
+    const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
         const result = await login(email, password)
 

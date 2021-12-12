@@ -1,20 +1,18 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import BurgerIngredients from "../components/burger-ingredients";
 import BurgerConstructor from "../components/burger-constructor";
 import Modal from "../components/modal";
-import IngredientDetails from "../components/ingredients-details";
 import OrderDetails from "../components/order-details";
-
-
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import styles from "../components/app/app.module.css";
 
-const MainPage = () => {
+
+const MainPage: React.FC = () => {
     const history = useHistory()
-    const [isOrderOpen, setOrderOpen] = useState(false);
-    const displayIngredientInfo = (ingredient) => {
+    const [isOrderOpen, setOrderOpen] = useState<boolean>(false);
+    const displayIngredientInfo = (ingredient: { _id: number }) => {
         history.push(
             `/ingredients/${ingredient._id}`,
             { background: history.location }
@@ -29,10 +27,10 @@ const MainPage = () => {
                     <BurgerConstructor displayOrderInfo={() => setOrderOpen(true)} />
                 </DndProvider>
             </div>
-            {isOrderOpen && 
-            <Modal onClose={() => setOrderOpen(false)}>
-                <OrderDetails />
-            </Modal>}
+            {isOrderOpen &&
+                <Modal onClose={() => setOrderOpen(false)}>
+                    <OrderDetails />
+                </Modal>}
         </>
     )
 }

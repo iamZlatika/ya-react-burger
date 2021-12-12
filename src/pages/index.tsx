@@ -6,6 +6,7 @@ import ResetPassPage from "./reset-pass-page";
 import NotFoundPage from "./not-found-page";
 import ProfilePage from "./profile-page";
 import ForgotPassPage from "./forgot-password-page";
+import FeedPage from './feed-page'
 
 export {
     MainPage, 
@@ -15,5 +16,6 @@ export {
     ResetPassPage,
     NotFoundPage,
     ProfilePage,
-    ForgotPassPage
+    ForgotPassPage, 
+    FeedPage
 }
