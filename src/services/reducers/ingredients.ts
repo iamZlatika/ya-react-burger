@@ -1,5 +1,6 @@
-import { SET_INGREDIENTS, SET_CURRENT_IGREDIENT } from "../actions";
+import { SET_INGREDIENTS, SET_CURRENT_INGREDIENT, TActions } from "../actions";
 import { IIngredient } from "../types";
+
 
 export interface IIngredients {
   buns: string[];
@@ -15,7 +16,7 @@ const initialState: IIngredients = {
   ingredients: {},
 };
 
-export const ingredientsReducer = (state = initialState, action: any) => {
+export const ingredientsReducer = (state = initialState, action: TActions) => {
   switch (action.type) {
     case SET_INGREDIENTS: {
       return {
@@ -34,7 +35,7 @@ export const ingredientsReducer = (state = initialState, action: any) => {
         ),
       };
     }
-    case SET_CURRENT_IGREDIENT: {
+    case SET_CURRENT_INGREDIENT: {
       return {
         ...state,
         currentIngredient: action.currentIngredient,

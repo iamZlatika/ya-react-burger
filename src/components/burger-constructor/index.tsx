@@ -6,9 +6,10 @@ import {
   ConstructorElement,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "../../services/hooks";
 import {
   ADD_INGREDIENT,
   DELETE_IGREDIENT,
@@ -25,8 +26,8 @@ const BurgerConstructor: React.FC<IBurgerConstructor> = ({ displayOrderInfo }) =
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const { ingredients, bun } = useSelector<unknown, { ingredients: IIngredient[], bun: IIngredient }>((store: any) => store.order);
-  const { loggedIn } = useSelector((state: any) => state.auth);
+  const { ingredients, bun } = useSelector((store) => store.order);
+  const { loggedIn } = useSelector((state) => state.auth);
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(ingredient) {

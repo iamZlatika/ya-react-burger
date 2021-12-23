@@ -1,11 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { makeOrder } from "../actions";
+import { useSelector } from "../hooks";
 
 
 export const useOrder = () => {
     const dispatch = useDispatch()
-    const { ingredients, bun } = useSelector((store: any) => store.order);
-    const { accessToken } = useSelector((state : any) => state.auth)
+    const { ingredients, bun } = useSelector((store) => store.order);
+    const { accessToken } = useSelector((state) => state.auth)
     const createOrder = () => {
         dispatch(makeOrder(bun ? [bun, ...ingredients, bun] : ingredients, accessToken));
 

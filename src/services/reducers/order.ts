@@ -1,4 +1,5 @@
-import { SET_ORDER_NUMBER, ADD_INGREDIENT, DELETE_IGREDIENT, MOVE_IGREDIENT } from "../actions";
+import { SET_ORDER_NUMBER, ADD_INGREDIENT, DELETE_IGREDIENT, MOVE_IGREDIENT, TActions } from "../actions";
+
 
 interface IOrder {
     orderNumber: string,
@@ -14,7 +15,7 @@ const initialState : IOrder= {
 
 
 let __id = 0
-export const orderReducer = (state = initialState, action : any)=> {
+export const orderReducer = (state = initialState, action : TActions)=> {
     switch (action.type) {
         case SET_ORDER_NUMBER: {
             return {
